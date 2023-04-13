@@ -52,4 +52,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: github-actions-artifact
-        path: artifacts
+        path: artifacts/app.jar
