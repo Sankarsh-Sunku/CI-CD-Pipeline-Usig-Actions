@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Docker Compose UP
     steps:
+      - uses: actions/checkout@v2
       - run: | 
              cd Demo
              docker compose up
