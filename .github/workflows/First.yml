@@ -8,6 +8,14 @@ on:
     branches: [ main ]
 
 jobs:
+  job2:
+    runs-on: ubuntu-latest
+    name: Docker Compose UP
+    steps:
+      - run: | 
+             cd Demo
+             docker compose up
+             docker ps -a
   build:
     runs-on: ubuntu-latest
     services:
