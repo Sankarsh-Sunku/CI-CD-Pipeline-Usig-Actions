@@ -45,9 +45,9 @@ jobs:
     - name: Build with Maven
       run: |
            cd Demo
-           mkdir -p artifacts
-           mvn package -Dmaven.build.directory=path/to/files
-           cp files/*.jar artifacts
+           mkdir -p files
+           mvn package -Dmaven.build.directory=Demo/files/
+           mkdir artifacts && cp files/*.jar artifacts
            cd artifacts && ls
     - name: Save artifact 
       uses: actions/upload-artifact@v3
