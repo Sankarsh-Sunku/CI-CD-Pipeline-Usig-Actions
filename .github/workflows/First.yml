@@ -8,16 +8,41 @@ on:
     branches: [ main ]
 
 jobs:
-  job2:
+  publish:
     runs-on: ubuntu-latest
-    needs: [build]
-    name: Docker Compose UP
     steps:
-      - uses: actions/checkout@v3
-      - run: | 
-             cd Demo
-             docker compose up
-             docker ps -a
+      - name: Checkout
+        uses: actions/checkout@v3
+      # Add your test steps here if needed...
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        #  the "docker/metadata-action" is used to generate metadata for the Docker image. This step defines the image name and tag based on the branch or commit hash.
+        with:
+          images: ghcr.io/sankarsh-sunku/ci-cd-pipeline-usig-actions
+          tags: type=sha
+      - name: Login to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build container
+        uses: docker/build-push-action@v4
+        with:
+          context: Demo
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+#   job2:
+#     runs-on: ubuntu-latest
+#     needs: [build]
+#     name: Docker Compose UP
+#     steps:
+#       - uses: actions/checkout@v3
+#       - run: | 
+#              cd Demo
+#              docker compose up
+#              docker ps -a
   build:
     runs-on: ubuntu-latest
     services:
